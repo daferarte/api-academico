@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Equivalencias{
+  id Int @id @default(autoincrement())
+  id_asignaturas_plan_estudios Json
+  semestres Json
+  creado DateTime @default(now())
+  actualizado DateTime @updatedAt
+  retornos Retornos[]
+}
+
+model Retornos{
+  id BigInt @id @default(autoincrement())
+  creado DateTime @default(now())
+  actualizado DateTime @updatedAt
+  id_asignaturas_matriculas Int
+  equivalencias Equivalencias? @relation(fields: [equivalencias_id], references: [id])
+  equivalencias_id  Int?
+}

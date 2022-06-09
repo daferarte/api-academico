@@ -1,0 +1,22 @@
+# Vamos a definir los servicios y contenedores a usar
+version: '3.7'
+
+services:
+    
+    # Preparamos el servidor
+    academico_api:
+        container_name: academico_api
+        restart: unless-stopped
+        build:
+            context: ./API/
+        ports:
+            - "3003:3003"
+        volumes:
+            - ./API/app/:/usr/academicoAPI/
+            - ./env/.env.dev:/usr/academicoAPI/.env
+        networks:
+            - dev_env_network
+
+networks:
+    dev_env_network:
+        driver: bridge
